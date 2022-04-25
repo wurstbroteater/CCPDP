@@ -1,4 +1,5 @@
 package Blatt01;
+
 /**
  * Example Benchmark case that simply sleeps for one second.
  */

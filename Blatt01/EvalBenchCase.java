@@ -1,8 +1,10 @@
 package Blatt01;
+
 import java.util.Random;
 
 public class EvalBenchCase implements BenchCase {
     private int[] array;
+
     public EvalBenchCase(int size) {
         array = new int[size];
         Random rd = new Random();

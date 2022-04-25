@@ -1,8 +1,10 @@
 package Blatt01;
+
 import java.util.Random;
 
 public class AlgoBenchCase implements BenchCase {
     private int[] array;
+
     public AlgoBenchCase(int size) {
         array = new int[size];
         Random rd = new Random();
@@ -12,7 +14,7 @@ public class AlgoBenchCase implements BenchCase {
     }
 
     public AlgoBenchCase(int[] array) {
-      this.array = array;
+        this.array = array;
     }
 
     @Override

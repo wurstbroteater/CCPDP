@@ -1,4 +1,5 @@
 package Blatt01;
+
 /**
  * BenchCase represents the a single execution of a benchmarked function.
  *
