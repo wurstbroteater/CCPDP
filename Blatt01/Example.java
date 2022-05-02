@@ -16,7 +16,7 @@ class Example {
         // performBenchmark(5,1000, 200000);
         // System.out.println("----------------------------------------------");
         // performBenchmark(5,1000, 1000000);
-        int size = 10000;
+        int size = 10000000;
         int[] array = new int[size];
         Random rd = new Random();
         for (int i = 0; i < array.length; i++) {

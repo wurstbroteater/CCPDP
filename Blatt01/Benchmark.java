@@ -95,7 +95,7 @@ public final class Benchmark {
             this.benchmarkDurations.add((Duration.between(start, end)));
             runs++;
             // check benchmark time limit
-            if (Duration.between(startTime.get(), end).getSeconds() > benchmarkTimelimit) {
+            if (Duration.between(startTime.get(), end).getSeconds() >= benchmarkTimelimit) {
                 System.err.println("Benchmark reached global time limit of " + benchmarkTimelimit + " sec");
                 break;
             }
