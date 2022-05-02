@@ -130,9 +130,31 @@ function sy(tokens)
             -- if currrent is not a number then it must be a operator
             opStack.push(current)
         end
-        -- how to check precedence and left associative?
+
         
     end    
+end
+
+function checkPrecedence(operator)
+    if operator == '^' then 
+        return 4
+    elseif operator == '*' or operator == '/' then
+        return 3
+    elseif operator == '+' or operator == '-' then
+        return 2
+    else 
+        error("invalid operator " .. operator)
+    end
+end
+
+function checkAssociativity(operator)
+    if operator == '^' then 
+        return 'right'
+    elseif operator == '*' or operator == '/' or operator == '+' or operator == '-' then
+        return 'left'
+    else 
+        error("invalid operator " .. operator)
+    end
 end
 
 function eval()
