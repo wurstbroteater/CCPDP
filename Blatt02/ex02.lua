@@ -140,7 +140,7 @@ end
 function sy(tokens)
   -- https://en.wikipedia.org/wiki/Shunting_yard_algorithm
   -- example input: 2 + 5 * ( 4 + 3 ), expected out: 2 5 4 3 + * + 
-  -- 3 + 4 × 2 ÷ ( 1 − 5 ) ^ 2 ^ 3
+  -- 3 + 4 × 2 ÷ ( 1 − 5 ) ^ 2 ^ 3, expected out: 3 4 2 × 1 5 − 2 3 ^ ^ ÷ + 
   -- only for ints because of tonumber(...)
     --WIP
     readTokens= {}
@@ -231,7 +231,28 @@ function getAssociativity(operator)
     end
 end
 
-function eval()
+function eval(queue)
+  --WIP
+  out = Queue()
+  numberQueue = Queue()
+  current = queue.del()
+  while tonumber(current) ~= nil do
+    numberQueue.add(tonumber(current))
+  end
+  -- Now current can only be an operator
+  erg = nil
+  if current == '+' then
+    out.add( numberQueue.del() + numberQueue.del())
+  elseif current == '-' or current == '−' then
+    out.add( numberQueue.del() - numberQueue.del())
+  elseif current == '×' or current == '*' then
+    out.add( numberQueue.del() * numberQueue.del())
+  elseif current == '÷' or current == '/' then
+    out.add( numberQueue.del() * numberQueue.del())
+  else
+    error("invalid operator " .. current) 
+  end
+  return out
 
 end
 
@@ -258,8 +279,11 @@ end
 --------------------------------- Start ----------------------------------
 splittedInput = read()
 print("After read() " .. table2String(splittedInput))
-processedInput = sy(splittedInput)
 print('--------------------------------------')
+processedInput = sy(splittedInput)
 print("After sy() " .. ds2String(processedInput))
+print('--------------------------------------')
+evaluatedInput = eval(processedInput)
+print("After eval() " .. ds2String(evaluatedInput))
 
 
