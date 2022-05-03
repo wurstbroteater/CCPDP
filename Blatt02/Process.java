@@ -15,7 +15,8 @@ public class Process<T> extends Thread {
      * t0 = approx. communication overhead
      * 
      * for N = 4 and tp = 0,1s and t0 = 0 (no Overhead)
-     *  -> AL = 
+     *  -> AL bei N = 4 is 3,0077
+     *  -> AL bei N=64 is 8,07062
      * */
     int[] n;
     int[] k;
@@ -70,6 +71,7 @@ public class Process<T> extends Thread {
     }
 
     // Compiler Optimizations
+    // not repoducible
     public void runB35() {
         if (customId % 2 != 0) {
             // id 1 case
