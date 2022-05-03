@@ -4,7 +4,7 @@
 ------!!!!!!!!!!!!!!!
 
 ---------------------------------- Utils ----------------------------------
----- start: Queue, src: https://subscription.packtpub.com/book/game-development/9781849515504/1/ch01lvl1sec12/making-a-queue
+---- start: Queue, inspiration: https://subscription.packtpub.com/book/game-development/9781849515504/1/ch01lvl1sec12/making-a-queue
 local function Queue()
     local out = {}
     -- zero indexed
@@ -21,6 +21,9 @@ local function Queue()
         first = first + 1
         return value
       end
+    end
+    out.first = function()
+      return out[first] 
     end
     out.iterator = function()
       return function()
@@ -45,7 +48,7 @@ local function Queue()
 end
 --#####################################
 
---start: Stack, src: https://subscription.packtpub.com/book/game-development/9781849515504/1/ch01lvl1sec11/making-a-stack
+--start: Stack, inspiration: https://subscription.packtpub.com/book/game-development/9781849515504/1/ch01lvl1sec11/making-a-stack
 function Stack()
     local out = {}
     -- indexed
@@ -111,7 +114,7 @@ end
 
 function ds2String(ds)
   out = ''
-  if ds == nil or #ds == 0 then
+  if ds == nil or #ds <= 0 then
     return out
   end
   for element in ds.iterator() do
@@ -232,27 +235,45 @@ function getAssociativity(operator)
 end
 
 function eval(queue)
-  --WIP
-  out = Queue()
+  --eval is wrong. should be processed just the other way round
+  outStack = Stack()
   numberQueue = Queue()
   current = queue.del()
-  while tonumber(current) ~= nil do
-    numberQueue.add(tonumber(current))
+  while current ~= nil do
+    while tonumber(current) ~= nil do
+      numberQueue.add(tonumber(current))
+      current = queue.del()
+    end
+    -- Now current can only be an operator
+    left = tonumber(numberQueue.del())
+    print('Queue ' .. #numberQueue .. ' Stack ' .. #outStack)
+    print('current ' .. current)
+    if #outStack == 0 then
+      right = tonumber(numberQueue.first())
+    else
+      right = tonumber(outStack.peek())
+    end
+    print('left ' .. left .. ' right ' .. right)
+    erg = nil
+    if current == '+' then
+      erg = left + right
+    elseif current == '-' or current == '−' then
+      erg = left - right
+    elseif current == '×' or current == '*' then
+      erg = left * right
+    elseif current == '÷' or current == '/' then
+      erg = left / right
+    else
+      error("invalid operator " .. current) 
+    end
+    print("intermediate is " .. erg)
+    outStack.push(erg)
+    if #numberQueue > 0 then print('numberQueue: ' .. ds2String(numberQueue)) end
+    if #outStack > 0 then print('outStack: ' .. ds2String(outStack)) end
+    current = queue.del()
+    print('')
   end
-  -- Now current can only be an operator
-  erg = nil
-  if current == '+' then
-    out.add( numberQueue.del() + numberQueue.del())
-  elseif current == '-' or current == '−' then
-    out.add( numberQueue.del() - numberQueue.del())
-  elseif current == '×' or current == '*' then
-    out.add( numberQueue.del() * numberQueue.del())
-  elseif current == '÷' or current == '/' then
-    out.add( numberQueue.del() * numberQueue.del())
-  else
-    error("invalid operator " .. current) 
-  end
-  return out
+  return outStack
 
 end
 
@@ -284,6 +305,7 @@ processedInput = sy(splittedInput)
 print("After sy() " .. ds2String(processedInput))
 print('--------------------------------------')
 evaluatedInput = eval(processedInput)
+--for 2 5 4 3 + * + After eval should be 7,35,37
 print("After eval() " .. ds2String(evaluatedInput))
 
 

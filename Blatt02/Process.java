@@ -11,11 +11,11 @@ public class Process<T> extends Thread {
      * (1-tp) + t0 + (tp/N) (= time to execte prog on N parallel processors)
      * s_t = time to execute prog on single processor
      * N = # CPUs
-     * tp = portion of programm that can be executed in parallel
+     * tp = portion of programm that can be executed in parallel as %
      * t0 = approx. communication overhead
      * 
-     * for N = 4 and tp = 0,1s and t0 = 0 (no Overhead)
-     *  -> AL bei N = 4 is 3,0077
+     * for N = 4 and tp = 445/500 = 89% and t0 = 0 (no Overhead)
+     *  -> AL bei N = 4 is 1/((1-89%) + 0 + 89%/4) = 3,0077
      *  -> AL bei N=64 is 8,07062
      * */
     int[] n;
