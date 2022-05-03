@@ -22,7 +22,7 @@ public class Process<T> extends Thread {
     boolean[] flag;
     private final int customId;
     private final int maxInc = 0;
-    private static final String example = "B32"; // "B20", "B27", "B32"
+    private static final String example = "B32"; // "B20", "B27", "B32", "B35"
 
     public Process(int[] n, int[] k, boolean[] flag, int id) {
         this.n = n;
@@ -82,6 +82,7 @@ public class Process<T> extends Thread {
         } else {
             int local;
             local = n[0]+ 6;
+            System.out.println(local);
         }
     }
 
@@ -125,7 +126,7 @@ public class Process<T> extends Thread {
 
     public static void main(String[] args) {
         ArrayList<Pair<Integer>> occurs = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1; i++) {
             int[] n = { 0 };
             int[] k = { 1 };
             boolean[] flag = { false };
@@ -137,6 +138,12 @@ public class Process<T> extends Thread {
                 sleepFor(100);
             }
             p2.start();
+            try {
+                p//1.join();
+                //p2.join();
+            } catch (Exception ex) {
+                //
+            }
             occurs.add(new Pair<Integer>(n[0], k[0]));
             // System.out.println(n[0]);
         }
