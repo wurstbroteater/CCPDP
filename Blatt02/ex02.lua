@@ -139,7 +139,8 @@ end
 
 function sy(tokens)
   -- https://en.wikipedia.org/wiki/Shunting_yard_algorithm
-  -- example input: 2 + 5 * ( 4 + 3 )
+  -- example input: 2 + 5 * ( 4 + 3 ), expected out: 2 5 4 3 + * + 
+  -- 3 + 4 × 2 ÷ ( 1 − 5 ) ^ 2 ^ 3
   -- only for ints because of tonumber(...)
     --WIP
     readTokens= {}
@@ -150,9 +151,6 @@ function sy(tokens)
         --current = trim(tokens[i])
         current = tokens[i]
         print("run ".. i .. " of ".. #tokens)
-        --print(" Stack size " .. #opStack)
-        --print(" Queue size " .. #outOueue)
-        --print(" Current is " .. current .. " size " .. #current)
         print(" Current is " .. current)
         if current == '=' then
           print(' skipping ')
@@ -164,29 +162,33 @@ function sy(tokens)
             print(' Add ' .. current .. ' to output!')
         end
         --if tonumber(current) == nil and current ~= '(' and current ~= ')' then
-        if tonumber(current) == nil then
+        if tonumber(current) == nil  then
           --print(' Op ' .. current .. ' must NOT be ( or ) here')
             -- only add operators, not parentheses
             while #opStack > 0 and opStack.peek() ~= '(' and (getPrecedence(opStack.peek()) > getPrecedence(current) or (getPrecedence(opStack.peek()) == getPrecedence(current) and getAssociativity(current) == 'left')) do
-              outOueue.add(opStack.pop())
+              dummy = opStack.pop()
+              print( ' Pop ' .. dummy .. ' from stack to output!')
+              outOueue.add(dummy)
             end
-            opStack.push(current)
-            print(' Push ' .. current .. ' to stack!')
+            if current ~= ')' then
+              print(' Push ' .. current .. ' to stack!')
+              opStack.push(current)
+            end
         end
         if current == '(' or current == ')' then
           -- here: not a number and not a operator, so it must be ( or )
           --print(' Op ' .. current .. ' must be ( or ) here')
-          if operator == '(' then
-            opStack.push(current)
-            print(' Push ' .. current .. ' to stack!')
+          if current == '(' then
+            --opStack.push(current)
+            --print(' Push ' .. current .. ' to stack!')
           else
-            assert(operator ~= ')', 'found invalid operator here: ' .. tostring(operator))
+            --assert(current ~= ')', 'found invalid operator here: ' .. tostring(current))
             while #opStack > 0 and opStack.peek() ~= '(' do
               outOueue.add(opStack.pop())
             end
             -- pop left
             if # opStack > 0 then 
-              assert(opStack.peek() == '(', 'operator is ' .. tostring(operator) .. ' but should be \'(\'')
+              assert(opStack.peek() == '(', 'operator is ' .. tostring(current) .. ' but should be \'(\'')
               opStack.pop()
             end
           end
@@ -237,8 +239,10 @@ end
 --print(table2String(splittedInput))
 --print(#splittedInput -1) -- should be 9 (because example is 0 indexed)
 --testStack = Stack()
---testStack.push(1337)
---testStack.push(42)
+--testStack.push('+')
+--testStack.push('x')
+--testStack.push('(')
+--print(ds2String(testStack))
 --print("# Stack size: " .. #testStack)
 --for element in testStack.iterator() do
 --    print(element)
@@ -257,3 +261,5 @@ print("After read() " .. table2String(splittedInput))
 processedInput = sy(splittedInput)
 print('--------------------------------------')
 print("After sy() " .. ds2String(processedInput))
+
+
