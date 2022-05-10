@@ -1,0 +1,6 @@
+A1
+
+b) use locks
+c) wait = Thread wartet   (geht auch zeibasiert) und wird dann geweckt
+notify() = Benachrichtigt irgendeinen Thread. THread prüft dann eine Bedingung ob er was machen darf (wenn nicht wieder schlafen)
+
