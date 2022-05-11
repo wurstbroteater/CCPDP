@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Blatt03/A2_imp/A2_imp.iml" filepath="$PROJECT_DIR$/Blatt03/A2_imp/A2_imp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blatt03/Aufgabe2_ThreadsBank/Aufgabe2_ThreadsBank.iml" filepath="$PROJECT_DIR$/Blatt03/Aufgabe2_ThreadsBank/Aufgabe2_ThreadsBank.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blatt03/Blatt03.iml" filepath="$PROJECT_DIR$/Blatt03/Blatt03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CCPDP.iml" filepath="$PROJECT_DIR$/CCPDP.iml" />
+    </modules>
+  </component>
+</project>
